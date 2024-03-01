@@ -12,13 +12,13 @@ rosd-stop(){
 
 rosd-shell() {
     # open a shell in the container
-    docker exec -ti rosd_c bash -l
+    docker exec -ti rosd_bridge_c bash -l
 }
 
 rosd-build() {
     # if the container is running, stop it
-    if [ "$(docker ps -q -f name=rosd_c)" ]; then
-        echo "stopping container rosd_c..."
+    if [ "$(docker ps -q -f name=rosd_bridge_c)" ]; then
+        echo "stopping container rosd_bridge_c..."
         docker compose -f $ROSD_DIRECTORY/Docker/docker-compose.yaml down
     fi
     # build the container from the docker-compose file
@@ -34,5 +34,5 @@ rosd-dir() {
 
 rosd-log() {
     # view the logs of the picogk container
-    docker logs rosd_c
+    docker logs rosd_bridge_c
 }

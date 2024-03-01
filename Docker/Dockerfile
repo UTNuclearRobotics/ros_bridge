@@ -1,54 +1,52 @@
-FROM ros:noetic-ros-base-focal
+FROM ros:galactic-ros-base-focal
 
 SHELL ["/bin/bash", "-c"]
 
-# set the ros version
-ENV ROS_DISTRO noetic
+ENV DEBIAN_FRONTEND=noninteractive
 
-# install some useful packages and upgrade existing ones
-RUN apt update && apt upgrade -y \
-    && apt install -y \
-    apt-utils \
-    git \
-    curl \
-    nano \
-    vim \
-    tmux \
-    x11-apps \
-    python3-pip \
-    python3-catkin-tools \
-    python-is-python3 \
-    libqt5websockets5-dev \
-    qt5-default
+# setup ros1 sources.list and keys 
+RUN echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list 
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654 
 
-# install ros packages
-# see ../docs/installing_ros_packages.md for alternatives
-RUN DEBIAN_FRONTEND=noninteractive apt install -y \
-    ros-${ROS_DISTRO}-rviz \
-    && rm -rf /var/lib/apt/lists/*
+ENV ROS1_DISTRO noetic 
+ENV ROS2_DISTRO galactic 
 
-RUN rosdep update
+# install ROS1 debian packages 
+RUN apt-get update && apt-get install -y --no-install-recommends \ 
+    ros-noetic-ros-comm \
+    ros-noetic-tf2-msgs \
+    ros-noetic-roscpp-tutorials=0.10.2-1* \
+    ros-noetic-rospy-tutorials=0.10.2-1* \
+    && rm -rf /var/lib/apt/lists/* 
 
-# switch to home dir
-WORKDIR /root
+# install ROS2 debian packages 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ros-galactic-tf2-msgs \
+    ros-galactic-rviz-common \
+    qtbase5-dev \
+    ros-galactic-rviz-default-plugins \
+    ros-${ROS2_DISTRO}-rmw-fastrtps-cpp \
+    ros-${ROS2_DISTRO}-rmw-cyclonedds-cpp \
+    ros-${ROS2_DISTRO}-rmw \
+    && rm -rf /var/lib/apt/lists/* 
 
-# setup a package from github
-RUN git clone https://github.com/ut-amrl/amrl_msgs.git
-RUN source /opt/ros/${ROS_DISTRO}/setup.bash \
-    && cd amrl_msgs \
-    && export ROS_PACKAGE_PATH=`pwd`:$ROS_PACKAGE_PATH \
-    && make -j
+# clone bridge source code and build from source 
+RUN mkdir -p /bridge_ws/src 
+WORKDIR /bridge_ws/src 
+RUN git clone -b ${ROS2_DISTRO} https://github.com/ros2/ros1_bridge.git 
+WORKDIR /bridge_ws 
+RUN source /opt/ros/${ROS1_DISTRO}/setup.bash && \ 
+    source /opt/ros/${ROS2_DISTRO}/setup.bash && \
+    colcon build --symlink-install --packages-skip ros1_bridge 
 
-# setup .bashrc
-SHELL ["/bin/bash", "-l", "-c"]
-RUN echo -e "\
-    source /opt/ros/${ROS_DISTRO}/setup.bash\n\
-    export ROS_PACKAGE_PATH=\$ROS_PACKAGE_PATH:/root/amrl_msgs" >> ~/.bashrc \
-    && echo -e "\
-    source /opt/ros/${ROS_DISTRO}/setup.bash\n\
-    export ROS_PACKAGE_PATH=\$ROS_PACKAGE_PATH:/root/amrl_msgs" >> ~/.profile
+# build workspace and ros1_bridge from source
+RUN source /opt/ros/${ROS1_DISTRO}/setup.bash && \ 
+    source /opt/ros/${ROS2_DISTRO}/setup.bash && \ 
+    source install/setup.bash && \ 
+    colcon build --packages-select ros1_bridge --cmake-force-configure
 
 # copy the entrypoint into the image
 COPY ./entrypoint.sh /entrypoint.sh
+
 # run this script on startup
 ENTRYPOINT /entrypoint.sh
