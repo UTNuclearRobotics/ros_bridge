@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  ros_bridge_docker:
+  ros_bridge:
     image: ros_bridge_i
     container_name: ros_bridge_c
     build:
