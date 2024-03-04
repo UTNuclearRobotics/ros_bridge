@@ -1,7 +1,7 @@
 rosd-start(){
-    #add xhost permissions for docker to use display
-    xhost +local:docker
-    echo "added docker xhost permissions"
+    # add xhost permissions for docker to use display
+    # xhost +local:docker
+    # echo "added docker xhost permissions"
     docker compose -f $ROSD_DIRECTORY/Docker/docker-compose.yaml up -d
 }
 
