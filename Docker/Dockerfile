@@ -15,11 +15,13 @@ ENV ROS2_DISTRO galactic
 RUN apt-get update && apt-get install -y --no-install-recommends \ 
     ros-noetic-ros-comm \
     ros-noetic-tf2-msgs \
+    ros-noetic-nav-msgs \
     && rm -rf /var/lib/apt/lists/* 
 
 # install ROS2 debian packages 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-galactic-tf2-msgs \
+    ros-galactic-nav-msgs \
     qtbase5-dev \
     ros-${ROS2_DISTRO}-rmw-fastrtps-cpp \
     ros-${ROS2_DISTRO}-rmw-cyclonedds-cpp \
