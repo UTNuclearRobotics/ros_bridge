@@ -1,4 +1,4 @@
-rosd-start(){
+ros_bridge(){
     # add xhost permissions for docker to use display
     # xhost +local:docker
     # echo "added docker xhost permissions"
