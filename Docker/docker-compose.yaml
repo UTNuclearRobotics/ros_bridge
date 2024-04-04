@@ -8,11 +8,12 @@ services:
       # set the build context to the directory containing build files
       context: .
       dockerfile: Dockerfile
+    environment:
+    - ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
+    # give the container access to the host's network
     network_mode: host
     # enable stdin and tty to allow the user to run bash interactively
     stdin_open: true
     tty: true
     # run the entrypoint script
     entrypoint: /entrypoint.sh
-    # environment:
-    #   - ROS_DOMAIN_ID=23
