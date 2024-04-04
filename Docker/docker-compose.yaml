@@ -14,5 +14,5 @@ services:
     tty: true
     # run the entrypoint script
     entrypoint: /entrypoint.sh
-    environment:
-      - ROS_DOMAIN_ID=23
+    # environment:
+    #   - ROS_DOMAIN_ID=23
