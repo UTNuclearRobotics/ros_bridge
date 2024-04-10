@@ -1,15 +1,15 @@
 version: "3"
 
 services:
-  ros_bridge:
+  ros_bridge_s:
     image: ros_bridge_i
     container_name: ros_bridge_c
     build:
       # set the build context to the directory containing build files
       context: .
       dockerfile: Dockerfile
-    # environment:
-    # - ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
+    environment:
+    - ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
     # give the container access to the host's network
     network_mode: host
     # enable stdin and tty to allow the user to run bash interactively

@@ -13,21 +13,21 @@ ENV ROS2_DISTRO galactic
 
 # install ROS1 debian packages 
 RUN apt-get update && apt-get install -y --no-install-recommends \ 
-    ros-noetic-ros-comm \
-    ros-noetic-sensor-msgs \
-    ros-noetic-tf2-msgs \
-    ros-noetic-nav-msgs \
+    ros-${ROS1_DISTRO}-ros-comm \
+    ros-${ROS1_DISTRO}-sensor-msgs \
+    ros-${ROS1_DISTRO}-tf2-msgs \
+    ros-${ROS1_DISTRO}-nav-msgs \
     && rm -rf /var/lib/apt/lists/* 
 
 # install ROS2 debian packages 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    ros-galactic-sensor-msgs \
-    ros-galactic-tf2-msgs \
-    ros-galactic-nav-msgs \
-    qtbase5-dev \
+    ros-${ROS2_DISTRO}-sensor-msgs \
+    ros-${ROS2_DISTRO}-tf2-msgs \
+    ros-${ROS2_DISTRO}-nav-msgs \
     ros-${ROS2_DISTRO}-rmw-fastrtps-cpp \
     ros-${ROS2_DISTRO}-rmw-cyclonedds-cpp \
     ros-${ROS2_DISTRO}-rmw \
+    qtbase5-dev \
     && rm -rf /var/lib/apt/lists/* 
 
 # clone bridge source code and build from source 
