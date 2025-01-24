@@ -6,8 +6,8 @@ services:
     container_name: ros_bridge_c
     build:
       # set the build context to the directory containing build files
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: ros_bridge_docker/Dockerfile
     environment:
     - ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
     # give the container access to the host's network
