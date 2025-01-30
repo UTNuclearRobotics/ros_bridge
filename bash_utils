@@ -1,26 +1,18 @@
-# Source this file to get access to the functions below
-docker_build() {
+ros_bridge_build() {
     echo "Building the ROS bridge container..."
     docker compose -f docker-compose.yaml build
 }
 
-docker_start() {
+ros_bridge_start() {
     echo "Starting the ROS bridge container..."
     docker compose -f docker-compose.yaml up -d
 }
 
-docker_stop() {
+ros_bridge_stop() {
     echo "Stopping the ROS bridge container..."
     docker compose -f docker-compose.yaml down
 }
 
-docker_shell() {
-    if [ -z "$1" ]; then
-        echo "Error: No container name provided."
-        echo "Usage: docker_shell <container_name>"
-        return 1
-    fi
-    local container=$1
-    echo "Opening a shell for ${container}..."
-    docker exec -ti ${container} bash -l
+ros_bridge_shell() {
+    docker exec -ti ros_bridge_c bash -l
 }

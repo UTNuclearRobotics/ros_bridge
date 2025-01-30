@@ -1,48 +1,13 @@
-## ROS Bridge Docker
+Running this Docker container will spawn a `ros1_bridge` node to generate mappings for messages between ROS1 and ROS2. You do not need to do anything inside the shell of the Docker. Anytime the prerequisites are met for a topic, the messages will be seen between ROS1 and ROS2.
 
-Running this Docker container will spawn a `ros_bridge` node to generate mappings for messages between ROS1 and ROS2.
-
-### Prerequisites
-
+**Prerequisites:**
 - A topic is being published on side A. The message type of this topic should be known inside the Docker container (list below).
-- At least one subscriber listening for the topic on side B. You will most likely have to make a dummy script for testing.
+- At least 1 subscriber listening for the topic on side B. You will most likely have to make a dumby script for testing.
 
-### Steps to Start the ROS Bridge
-
-1. Source `bash_utils`:
-    ```bash
-    source bash_utils
-    ```
-2. Build the ROS bridge:
-    ```bash
-    ros_bridge_build
-    ```
-3. Start the ROS bridge:
-    ```bash
-    ros_bridge_start
-    ```
-4. Verify the node is running:
-    ```bash
-    ros2 node list
-    ```
-    You should see the `ros_bridge` node listed.
-5. When done, stop the ROS bridge:
-    ```bash
-    ros_bridge_stop
-    ```
-
-### Notes
-
-- There is no need to perform any actions inside the Docker container's shell.
-- The `ros_bridge` can be started before or after the topics are being published. As long as the prerequisites are met, messages will be correctly bridged between ROS1 and ROS2.
-
-### Message Types
-
+**Message types:**
 - `std_msgs` (default with ROS)
 - `nav_msgs`
 - `sensor_msgs`
 - `tf2_msgs`
 
-### Branch
-
-Feel free to create a branch for custom message types for your project. There are comments for you to follow in the source code.
+To add more message types, make sure the message type is installed in the Docker image. For custom messages, see the README.md in https://github.com/ros2/ros1_bridge.

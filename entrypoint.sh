@@ -4,7 +4,13 @@ set -e
 echo "ROS1 bridge entrypoint"
 
 # Source ROS2 and bridge environments
+# # source "/opt/ros/$ROS2_DISTRO/setup.bash"
+# cd /bridge_ws
+# source install/setup.bash
+
+# HUMBLE ADDS
 source "/opt/ros/$ROS2_DISTRO/setup.bash"
+source /ros2_ws/install/local_setup.bash
 cd /bridge_ws
 source install/setup.bash
 

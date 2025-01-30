@@ -1,0 +1,5 @@
+-
+  ros1_package_name: 'tdm_msgs'
+  ros1_service_name: 'ImageToSeg3dPrompt'
+  ros2_package_name: 'tdm_msgs'
+  ros2_service_name: 'ImageToSeg3dPrompt'

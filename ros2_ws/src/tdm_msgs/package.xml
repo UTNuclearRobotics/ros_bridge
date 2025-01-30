@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>tdm_msgs</name>
+  <version>0.0.1</version>
+  <description>Target detection monocular cameras ROS2 messages</description>
+  <maintainer email="fregal@utexas.edu">Frank Regal</maintainer>
+  <license file="LICENSE.txt">BSD-3</license>
+
+  <!-- Define Package as ROS2 Interface Package -->
+  <member_of_group>rosidl_interface_packages</member_of_group>
+
+  <!-- Build, export and exec dependencies -->
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>tf2_msgs</depend>
+
+  <!-- Build tools -->
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>rosidl_default_generators</buildtool_depend>
+
+  <!-- Runtime dependencies -->
+  <exec_depend>rosidl_default_runtime</exec_depend>
+
+  <!-- Export -->
+  <export>
+    <build_type>ament_cmake</build_type>
+    <ros1_bridge mapping_rules="my_mapping_rules.yaml"/>
+  </export>
+</package>
