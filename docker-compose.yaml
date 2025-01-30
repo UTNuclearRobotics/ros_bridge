@@ -9,6 +9,8 @@ services:
     environment:
     - ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
     # give the container access to the host's network
+    volumes:
+      - /dev/shm:/dev/shm
     network_mode: host
     # enable stdin and tty to allow the user to run bash interactively
     stdin_open: true
