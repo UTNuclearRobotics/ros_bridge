@@ -11,6 +11,9 @@ Running this Docker container will spawn a `ros1_bridge` node to generate mappin
 - A topic is being published on side A. The message type of this topic should be known inside the Docker container (list below).
 - At least 1 subscriber listening for the topic on side B. You will most likely have to make a dumby script for testing.
 
+## Install Prerequisites
+1. sudo ifconfig lo multicast
+
 ## 1. Installation and Configuration
 1. Clone repository
    
