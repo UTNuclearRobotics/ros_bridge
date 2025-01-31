@@ -9,7 +9,7 @@ FROM ros:humble-ros-core-jammy
 
 ENV DEBIAN_FRONTEND=noninteractive \
     ROS_LOCALHOST_ONLY=0 \
-    ROS_DOMAIN_ID=1
+    ROS_DOMAIN_ID=73
 
 # # Setup ROS1 sources.list and keys
 # RUN echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list
@@ -172,6 +172,15 @@ RUN echo "export ROS_DOMAIN_ID=${ROS_DOMAIN_ID}" >> ~/.bashrc
 RUN echo "export ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY}" >> ~/.bashrc
 RUN echo "alias sws='source /bridge_ws/install/setup.bash'" >> ~/.bashrc
 RUN echo "alias bridge_pairs='ros2 run ros1_bridge dynamic_bridge --print-pairs'" >> ~/.bashrc
+RUN echo 'export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp' >> ~/.bashrc
+RUN echo 'export CYCLONEDDS_URI=~/.zbashrc_cyclonedds.xml' >> ~/.bashrc
+
+COPY .zbashrc_cyclonedds.xml ~/.zbashrc_cyclonedds.xml
+
+# Update apt cache, install vim, git, and ssh, and then, remove the apt cache
+RUN apt-get update && \
+    apt-get install -y vim ros-$ROS2_DISTRO-cyclonedds ros-$ROS2_DISTRO-rmw-cyclonedds-cpp && \
+    rm -rf /var/lib/apt/lists/*
 
 # # Build workspace and ros1_bridge from source
 # RUN source /opt/ros/${ROS1_DISTRO}/setup.bash && \
@@ -181,6 +190,7 @@ RUN echo "alias bridge_pairs='ros2 run ros1_bridge dynamic_bridge --print-pairs'
 #     # source /bridge_ws/install/setup.bash && \
 
 
+RUN echo "Hola, amigo!"
 # Copy the entrypoint into the image
 COPY ./entrypoint.sh /entrypoint.sh
 
