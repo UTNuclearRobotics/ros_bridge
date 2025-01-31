@@ -7,9 +7,7 @@ FROM ros:humble-ros-core-jammy
 
 # SHELL ["/bin/bash", "-c"]
 
-ENV DEBIAN_FRONTEND=noninteractive \
-    ROS_LOCALHOST_ONLY=0 \
-    ROS_DOMAIN_ID=73
+ENV DEBIAN_FRONTEND=noninteractive
 
 # # Setup ROS1 sources.list and keys
 # RUN echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list
@@ -168,14 +166,10 @@ RUN ROS1_LIBS="libxmlrpcpp.so";                                                 
      done
 
 # RUN echo "export ROS_MASTER_URI=http://localhost:11311" >> ~/.bashrc
-RUN echo "export ROS_DOMAIN_ID=${ROS_DOMAIN_ID}" >> ~/.bashrc
-RUN echo "export ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY}" >> ~/.bashrc
 RUN echo "alias sws='source /bridge_ws/install/setup.bash'" >> ~/.bashrc
 RUN echo "alias bridge_pairs='ros2 run ros1_bridge dynamic_bridge --print-pairs'" >> ~/.bashrc
-RUN echo 'export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp' >> ~/.bashrc
-RUN echo 'export CYCLONEDDS_URI=~/.zbashrc_cyclonedds.xml' >> ~/.bashrc
 
-COPY .zbashrc_cyclonedds.xml ~/.zbashrc_cyclonedds.xml
+COPY .zbashrc_cyclonedds.xml /ros2_ws/.zbashrc_cyclonedds.xml
 
 # Update apt cache, install vim, git, and ssh, and then, remove the apt cache
 RUN apt-get update && \

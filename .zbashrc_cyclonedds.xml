@@ -3,7 +3,7 @@
     <Domain id="any">
         <General>
             <Interfaces>
-                <NetworkInterface name="wg0"/>
+                <NetworkInterface name="lo"/>
             </Interfaces>
         </General>
         <Discovery>
