@@ -6,11 +6,11 @@ services:
       context: ..
       dockerfile: docker/Dockerfile
     environment:
-      - ROS_DOMAIN_ID=16
-      - ROS_LOCALHOST_ONLY=0
       - ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-      - CYCLONEDDS_URI=/root/.zbashrc_cyclonedds.xml
+      - CYCLONEDDS_URI=/root/cyclonedds.xml
+    env_file:
+      - ./../ros_bridge.env
     volumes:
       - /dev/shm:/dev/shm
     network_mode: host

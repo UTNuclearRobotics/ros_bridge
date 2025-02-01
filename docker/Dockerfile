@@ -111,7 +111,7 @@ RUN echo "alias sws='source /bridge_ws/install/setup.bash'" >> ~/.bashrc
 RUN echo "alias pairs='ros2 run ros1_bridge dynamic_bridge --print-pairs'" >> ~/.bashrc
 
 # copy the cyclonedds config file
-COPY .zbashrc_cyclonedds.xml /root/.zbashrc_cyclonedds.xml
+COPY cyclonedds.xml /root/cyclonedds.xml
 
 # Copy the entrypoint into the image
 COPY ./docker/entrypoint.sh /entrypoint.sh

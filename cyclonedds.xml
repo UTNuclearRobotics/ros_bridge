@@ -1,24 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CycloneDDS xmlns="https://cdds.io/config"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd">
+<CycloneDDS xmlns="https://cdds.io/config" 
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+            xsi:schemaLocation="https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd">
+    <Domain id="any">
+        <General>
+            <Interfaces>
+                <NetworkInterface name="wlp2s0f0"/>
+            </Interfaces>
+            <!-- 
+            <AllowMulticast>
+                False
+            </AllowMulticast> 
+            -->
+        </General>
 
-  <Domain Id="any">
-    <General>
-       <!-- <Interfaces> -->
-         <!-- <NetworkInterface name="wg0"/> -->
-                     <!-- <NetworkInterfaceAddress>wlxa0d76840661c</NetworkInterfaceAddress> -->
+        <Discovery>
+            <Peers>
+                <!-- Settings for running ROS1 & ROS2 locally -->
+                <Peer address="127.0.0.1"/>
 
-       <!-- </Interfaces> -->
-       <!-- <AllowMulticast>False</AllowMulticast> -->
-     </General>
-     <Discovery>
-         <Peers>
-           <Peer address="10.10.10.18"/>
-           <Peer address="10.10.10.4"/>
-         </Peers>
-         <ParticipantIndex>auto</ParticipantIndex>
-         <MaxAutoParticipantIndex>100</MaxAutoParticipantIndex>
-     </Discovery>
-  </Domain>
+                <!-- Settings for running ROS1 & ROS2 on seperate machines across a network -->
+                <!-- <Peer address="<ip_ros1>"/> -->
+                <!-- <Peer address="<ip_ros2>"/> -->
+            </Peers>
+            <ParticipantIndex>
+                auto
+            </ParticipantIndex>
+            <MaxAutoParticipantIndex>
+                100
+            </MaxAutoParticipantIndex>
+        </Discovery>
+    </Domain>
 </CycloneDDS>
