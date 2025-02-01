@@ -1,0 +1,19 @@
+services:
+  ros_bridge:
+    image: nrg/ros_bridge
+    container_name: ros_bridge
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      - ROS_DOMAIN_ID=16
+      - ROS_LOCALHOST_ONLY=0
+      - ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=/root/.zbashrc_cyclonedds.xml
+    volumes:
+      - /dev/shm:/dev/shm
+    network_mode: host
+    stdin_open: true
+    tty: true
+    entrypoint: /entrypoint.sh

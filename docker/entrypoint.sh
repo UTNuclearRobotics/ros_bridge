@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-echo "ROS1 bridge entrypoint"
+echo "Starting Noetic <-> Humble ROS bridge..."
 
 # Source ROS2 and bridge environments
 source /opt/ros/$ROS2_DISTRO/setup.bash
