@@ -1,8 +1,0 @@
-# Request
-sensor_msgs/Image image  # Input monocular image
-string prompt            # Prompt for segmenting the image
-float32 threshold        # Threshold for segmenting the image
-
----
-# Response 
-tf2_msgs/TFMessage tf_message  # TF Message
