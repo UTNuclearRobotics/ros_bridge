@@ -1,4 +1,4 @@
-## ROS Bridge Docker
+## ROS Bridge Docker (Noetic <-> Galactic)
 
 Running this Docker container will spawn a `ros_bridge` node to generate mappings for messages between ROS1 and ROS2.
 
