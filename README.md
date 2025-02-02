@@ -29,14 +29,19 @@ Running this Docker container will spawn a `ros1_bridge` node to generate mappin
       > _**Note:** The names of your custom packages MUST match and you MUST post append the package names with "`_msgs`"._
       
 3. Set ROS Environment Variables
+
    1. Open `ros_bridge.env` environment variables file with your favorite editor.
+
    2. Set the following ROS1 and ROS2 variables to match your ROS1 and ROS2 environment settings you are bridging to.
       - `ROS_MASTER_URI` - ROS1 master ip address
       - `ROS_DOMAIN_ID`  - ROS2 domain ID
       - `ROS_LOCALHOST_ONLY` - 0 for false and 1 for true
-        
+  
 4. Adjust CYCLONE DDS settings in `cyclonedds.yml` if neccessary.
-5. Copy / Paste the `cyclonedds.yml` configuration file into your ROS2 workspace.
+5. Ensure a duplicate of this `cyclonedds.yml` configuration file is accessible in your ROS2 environment and the following variables are set
+   - `RMW_IMPLEMENTATION=rmw_cyclonedds_cpp`
+   - `CYCLONEDDS_URI=<path)to_dds_config>/cyclonedds.xml`
+
 
 ## 2. Build and Run
 1. Build Docker image
