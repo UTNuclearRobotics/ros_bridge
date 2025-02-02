@@ -4,9 +4,11 @@
             xsi:schemaLocation="https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd">
     <Domain id="any">
         <General>
+            <!--
             <Interfaces>
                 <NetworkInterface name="wlp2s0f0"/>
             </Interfaces>
+            -->
             <!-- 
             <AllowMulticast>
                 False
