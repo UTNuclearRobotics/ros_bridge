@@ -1,6 +1,20 @@
+# Copyright (c) 2025 The University of Texas at Austin
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
 # This Dockerfile is derived and adapted from the following repositories:
-# - https://github.com/smith-doug/ros1_bridge
-# - https://github.com/TommyChangUMD/ros-humble-ros1-bridge-builder/
+# - https://github.com/smith-doug/ros1_bridge (Apache 2.0 License)
+# - https://github.com/TommyChangUMD/ros-humble-ros1-bridge-builder/ (MIT License)
 
 FROM ros:humble-ros-core-jammy
 
@@ -57,23 +71,26 @@ RUN apt-get -y update
 # (ROS 1) First, build ROS 1 msgs & srvs:
 COPY ros1_ws /ros1_ws
 WORKDIR /ros1_ws
-RUN bash -c "unset ROS_DISTRO && \
-    time colcon build"
 # RUN bash -c "unset ROS_DISTRO && \
-#     time colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release"
+#     time colcon build"
+RUN bash -c "unset ROS_DISTRO && \
+    time colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release"
 
 # (ROS 2) Second, build ROS 2 msgs & srvs:
 COPY ros2_ws /ros2_ws
 WORKDIR /ros2_ws
-RUN source /opt/ros/humble/setup.bash && \
-    colcon build
 # RUN source /opt/ros/humble/setup.bash && \
-#     time colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
+#     colcon build
+RUN source /opt/ros/humble/setup.bash && \
+    time colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
 
 # (ROS 1 and ROS 2) Last, clone and build the ros1 to ros2 bridge:
 RUN mkdir -p /bridge_ws/src
 WORKDIR /bridge_ws/src
-RUN git clone -b action_bridge_humble https://github.com/smith-doug/ros1_bridge.git;
+#RUN git clone -b action_bridge_humble https://github.com/smith-doug/ros1_bridge.git;
+RUN git clone -b action_bridge_humble https://github.com/smith-doug/ros1_bridge.git && \
+    cd ros1_bridge && \
+    git checkout 8f1b7e903e1fb4462218db659bb4981228c12206;
 WORKDIR /bridge_ws
 RUN source /ros1_ws/install/setup.bash && \
     source /ros2_ws/install/setup.bash && \
