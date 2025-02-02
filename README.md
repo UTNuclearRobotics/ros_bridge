@@ -2,6 +2,8 @@
 
 Running this Docker container will spawn a `ros_bridge` node to generate mappings for messages between ROS1 and ROS2.
 
+*** This branch bridges ROS1 noetic with ROS2 galactic. If you need to bridge ROS1 noetic to ROS2 humble, see the `noetic-humble` branch.
+
 ### Prerequisites
 
 - A topic is being published on side A. The message type of this topic should be known inside the Docker container (list below).
