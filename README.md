@@ -7,9 +7,15 @@ Running this Docker container will spawn a `ros1_bridge` node to generate mappin
 - `sensor_msgs`
 - `tf2_msgs`
 
-**Prerequisites for Running**
-- A topic is being published on side A. The message type of this topic should be known inside the Docker container (list below).
-- At least 1 subscriber listening for the topic on side B. You will most likely have to make a dumby script for testing.
+**Runtime Nuances and Best Practices**
+- **Custom Msgs & Srvs**
+    - The packages _MUST_ have the exact same package name and be post fixed with "`_msgs`".
+    - For Example:
+      - ROS1 Pkg Name: `my_bridged_pkg_msgs`
+      - ROS2 Pkg Name: `my_bridged_pkg_msgs`
+- **Publishing Msgs from ROS2 ➡ ROS1**
+    - You need to start a ROS1 subscriber node that subscribes to the exact topic name and type you plan to publish from ROS2 _BEFORE_ you start the ROS2 publisher
+ 
 
 ## 1. Installation and Configuration
 1. Clone repository
@@ -17,10 +23,20 @@ Running this Docker container will spawn a `ros1_bridge` node to generate mappin
    ```shell
    git clone -b noetic-humble git@github.com:UTNuclearRobotics/ros_bridge.git
    ```
-3. Add custom msgs & srvs (Optional)
-   1. Copy/Paste your ROS1 and ROS2 packages into `/ros1_ws/src/` and `/ros2_ws/src`, respectively.
+2. Add custom msgs & srvs (Optional)
+   1. Place your ROS1 and ROS2 packages into `/ros1_ws/src/` and `/ros2_ws/src`, respectively.
       
-      > _**Note:** The names of your custom packages MUST match and you MUST post append the package names with `_msgs`._
+      > _**Note:** The names of your custom packages MUST match and you MUST post append the package names with "`_msgs`"._
+      
+3. Set ROS Environment Variables
+   1. Open `ros_bridge.env` environment variables file with your favorite editor.
+   2. Set the following ROS1 and ROS2 variables to match your ROS1 and ROS2 environment settings you are bridging to.
+      - `ROS_MASTER_URI` - ROS1 master ip address
+      - `ROS_DOMAIN_ID`  - ROS2 domain ID
+      - `ROS_LOCALHOST_ONLY` - 0 for false and 1 for true
+        
+4. Adjust CYCLONE DDS settings in `cyclonedds.yml` if neccessary.
+5. Copy / Paste the `cyclonedds.yml` configuration file into your ROS2 workspace.
 
 ## 2. Build and Run
 1. Build Docker image
