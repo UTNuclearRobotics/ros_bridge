@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  ros_bridge_s:
+  ros_noetic_s:
     image: ros_noetic_i
     container_name: ros_noetic_c
     build:

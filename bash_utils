@@ -1,16 +1,16 @@
 # Source this file to get access to the functions below
 docker_build() {
-    echo "Building the ROS bridge container..."
+    echo "Building Docker container..."
     docker compose -f docker-compose.yaml build
 }
 
 docker_start() {
-    echo "Starting the ROS bridge container..."
+    echo "Starting Docker container..."
     docker compose -f docker-compose.yaml up -d
 }
 
 docker_stop() {
-    echo "Stopping the ROS bridge container..."
+    echo "Stopping Docker container..."
     docker compose -f docker-compose.yaml down
 }
 
