@@ -66,7 +66,7 @@ Running this Docker container will spawn a `ros1_bridge` node to generate mappin
 4. See **Runtime Nuances and Best Practices** section at the top to understand the order in which to run publishers and subscribers.
    
 ## 3. Monitoring
-1. Open Docker shell
+1. Open Docker shell. Note this default shell will have ROS1 sourced already.
    
    ```shell
    make shell
