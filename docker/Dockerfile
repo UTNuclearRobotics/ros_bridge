@@ -71,6 +71,14 @@ RUN apt-get -y update
 # (ROS 1) First, build ROS 1 msgs & srvs:
 COPY ros1_ws /ros1_ws
 WORKDIR /ros1_ws
+#------------------------#
+# Non-standard ROS1 dependencies for the custom messages
+# COPY ros1_ws/custom_dependencies.list /tmp/
+# RUN apt-get update && \
+#     cat /tmp/custom_dependencies.list | xargs apt-get -y install && \
+#     rm -rf /var/lib/apt/lists/*
+# RUN rm /tmp/custom_dependencies.list
+#------------------------#
 # RUN bash -c "unset ROS_DISTRO && \
 #     time colcon build"
 RUN bash -c "unset ROS_DISTRO && \
@@ -79,6 +87,14 @@ RUN bash -c "unset ROS_DISTRO && \
 # (ROS 2) Second, build ROS 2 msgs & srvs:
 COPY ros2_ws /ros2_ws
 WORKDIR /ros2_ws
+#------------------------#
+# Non-standard ROS2 dependencies for the custom messages
+COPY ros2_ws/custom_dependencies.list /tmp/
+RUN apt-get update && \
+    cat /tmp/custom_dependencies.list | xargs apt-get -y install && \
+    rm -rf /var/lib/apt/lists/*
+RUN rm /tmp/custom_dependencies.list
+#------------------------#
 # RUN source /opt/ros/humble/setup.bash && \
 #     colcon build
 RUN source /opt/ros/humble/setup.bash && \
